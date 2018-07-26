@@ -1,6 +1,8 @@
-import React from 'React';
+import React from 'react';
 import ReactDOM from 'react-dom';
+import {HelpBlock, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 import axios from 'axios';
+import Signup from './components/Signup.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -12,9 +14,12 @@ class App extends React.Component {
   }
   render () {
     return (<div>
-
+      <Signup/>
     </div>);
   }
 }
+
+
+
 
 ReactDOM.render(<App />, document.getElementById('app'));

@@ -1,37 +1,68 @@
-DROP DATABASE IF EXISTS test;
+DROP DATABASE IF EXISTS skincare;
 
 CREATE DATABASE skincare;
 
 USE skincare;
 
-CREATE TABLE products (
-  id int NOT NULL AUTO_INCREMENT,
-  manufacturer int NOT NULL,
-  description varchar(50) NOT NULL,
-  ingredients varchar(1000) NOT NULL,
+DROP TABLE IF EXISTS user;
+
+CREATE TABLE user (
+  id INTEGER NOT NULL AUTO_INCREMENT,
+  email VARCHAR(250) NOT NULL UNIQUE,
+  username VARCHAR(15) NOT NULL UNIQUE,
+  password VARCHAR(250) NOT NULL,
+  age INTEGER,
+  skin_tone VARCHAR(50),
+  undertone VARCHAR (50),
+  skin_type VARCHAR (50),
+  skin_sens BOOLEAN,
+  climate VARCHAR (50),
+  enviroment VARCHAR (50),
+  skin_concerns VARCHAR(250),
   PRIMARY KEY (ID)
 );
 
-CREATE TABLE users (
-  id int NOT NULL AUTO_INCREMENT,
-  username varchar (15) NOT NULL UNIQUE,
-  password TEXT NOT NULL,
-  age int,
-  skin_tone varchar (25),
-  skin_type varchar (25),
-  sensitive boolean,
-  enviroment varchar (15),
-  climate varchar (50),
+DROP TABLE IF EXISTS manufacturer;
+
+CREATE TABLE manufacturer (
+  id INTEGER NOT NULL AUTO_INCREMENT,
+  name TEXT NOT NULL,
+  origin TEXT,
+  PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS product;
+
+CREATE TABLE product (
+  id INTEGER NOT NULL AUTO_INCREMENT,
+  id_manufacturer INTEGER,
+  product_name TEXT NOT NULL,
+  ingredients TEXT,
+  description TEXT,
   PRIMARY KEY(ID),
+  FOREIGN KEY (id_manufacturer) REFERENCES manufacturer (ID)
 );
 
 
+DROP TABLE IF EXISTS favorites;
+
 CREATE TABLE favorites (
-  id int NOT NULL AUTO_INCREMENT,
-  user_id int,
-  product_id int,
-  will_buy_again boolean,
-  PRIMARY KEY (id),
-  FOREIGN KEY (user_id) REFERENCES users(id)
-  FOREIGN KEY (product_id) REFERENCES products(id)
+  id INTEGER NOT NULL AUTO_INCREMENT,
+  id_user INTEGER,
+  id_product INTEGER,
+  will_buy_again BOOLEAN,
+  PRIMARY KEY (ID),
+  FOREIGN KEY (id_user) REFERENCES user (ID),
+  FOREIGN KEY (id_product) REFERENCES product (ID)
+);
+
+DROP TABLE IF EXISTS ratings;
+
+CREATE TABLE ratings (
+  id INTEGER NOT NULL AUTO_INCREMENT,
+  id_product INTEGER,
+  rated_amt INTEGER,
+  will_buy_amt INTEGER,
+  PRIMARY KEY (ID),
+  FOREIGN KEY (id_product) REFERENCES product (ID)
 );
